@@ -1,16 +1,34 @@
-<!DOCTYPE html>
+function mincost(arr) {
+  // Validate input
+  if (!Array.isArray(arr) || arr.length < 2) {
+    throw new Error("Input should be an array with at least two elements.");
+  }
 
-<html>
+  // Sort the array in ascending order
+  arr.sort((a, b) => a - b);
 
-<head>
-	<link rel="stylesheet" href="styles.css">
-</head>
+  let totalCost = 0;
 
-<body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-</script>
+  // Connect ropes until only one rope remains
+  while (arr.length > 1) {
+    // Take the two smallest ropes
+    const min1 = arr.shift();
+    const min2 = arr.shift();
 
-</body>
+    // Connect them and add the cost to the total
+    const currentCost = min1 + min2;
+    totalCost += currentCost;
 
-</html>
+    // Insert the connected rope back into the array
+    arr.push(currentCost);
+
+    // Re-sort the array to maintain the order
+    arr.sort((a, b) => a - b);
+  }
+
+  return totalCost;
+}
+
+// Example usage
+console.log(mincost([4, 3, 2, 6])); // Output: 29
+console.log(mincost([1, 2, 3, 4, 5])); // Output: 33
